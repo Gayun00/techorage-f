@@ -2,7 +2,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -24,26 +23,41 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
-
 export default function Home() {
   const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    url: z.string().refine(
+      (value) => {
+        const urlRegex =
+          /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/;
+        return urlRegex.test(value);
+      },
+      {
+        message: "유효한 URL 형식이어야 합니다.",
+      }
+    ),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      url: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const submitArticle = (url: string) => {
+    fetch("http://localhost:5000/article", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("data", data));
+  };
+
+  function onSubmit({ url }: z.infer<typeof formSchema>) {
+    submitArticle(url);
   }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -57,7 +71,7 @@ export default function Home() {
                 className="flex space-y-8">
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="url"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>url</FormLabel>
