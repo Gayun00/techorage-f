@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useEffect } from "react";
 
 export default function Home() {
   const formSchema = z.object({
@@ -55,6 +56,21 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => console.log("data", data));
   };
+
+  const getArticles = (token: string) => {
+    fetch("http://localhost:5000/articles", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("data", data));
+  };
+
+  useEffect(() => {
+    getArticles("token123");
+  }, []);
 
   function onSubmit({ url }: z.infer<typeof formSchema>) {
     submitArticle(url);
