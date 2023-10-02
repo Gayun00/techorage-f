@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -73,11 +74,48 @@ export default function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Card Content</p>
+          <div className="mb-4">
+            <Badge>Next.js</Badge>
+          </div>
+          <CardContent className="grid gap-4 px-0">
+            <div className="flex items-center space-x-4 rounded-md border p-4 m-0">
+              <div>img</div>
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  Push Notifications
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Send notifications to device.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4 rounded-md border p-4 m-0">
+              <div>img</div>
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  Push Notifications
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Send notifications to device.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4 rounded-md border p-4 m-0">
+              <div>img</div>
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  Push Notifications
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Send notifications to device.
+                </p>
+              </div>
+            </div>
+          </CardContent>
         </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
+        <CardFooter>techorage</CardFooter>
       </Card>
     </main>
   );
