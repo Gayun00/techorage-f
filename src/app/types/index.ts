@@ -5,3 +5,8 @@ export interface Article {
   keywords: string[];
   url: string;
 }
+
+export interface Keyword {
+  keyword: string;
+  count: number;
+}

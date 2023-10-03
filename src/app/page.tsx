@@ -16,10 +16,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { useArticleQuery, useSubmitArticleMutation } from "./queries";
+import {
+  useArticleQuery,
+  useKeywordsQuery,
+  useSubmitArticleMutation,
+} from "./queries";
 
 export default function Home() {
   const articles = useArticleQuery();
+  const keywords = useKeywordsQuery();
   const submitArticleMutation = useSubmitArticleMutation();
   const formSchema = z.object({
     url: z.string().refine(
@@ -48,6 +53,7 @@ export default function Home() {
   const handleArticleClick = (url: string) => {
     window.open(url);
   };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Card>
@@ -75,8 +81,11 @@ export default function Home() {
               <Button type="submit">Submit</Button>
             </form>
           </Form>
+
           <div className="mb-4">
-            <Badge>Next.js</Badge>
+            {keywords.data?.map((keywordData, idx) => (
+              <Badge key={idx}>{keywordData.keyword}</Badge>
+            ))}
           </div>
           <CardContent className="grid gap-4 px-0">
             {articles.data?.map((article) => (
