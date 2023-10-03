@@ -21,6 +21,8 @@ import {
   useKeywordsQuery,
   useSubmitArticleMutation,
 } from "./queries";
+import Article from "@/components/Article";
+import EmptyArticle from "@/components/emptyData/EmptyArticle";
 
 export default function Home() {
   const articles = useArticleQuery();
@@ -49,11 +51,6 @@ export default function Home() {
   function onSubmit({ url }: z.infer<typeof formSchema>) {
     submitArticleMutation.mutate(url);
   }
-
-  const handleArticleClick = (url: string) => {
-    window.open(url);
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Card>
@@ -83,31 +80,23 @@ export default function Home() {
           </Form>
 
           <div className="mb-4">
+            {!keywords.data?.length && (
+              <Badge>모은 아티클의 공통 키워드를 보여줘요</Badge>
+            )}
             {keywords.data?.map((keywordData, idx) => (
               <Badge key={idx}>{keywordData.keyword}</Badge>
             ))}
           </div>
           <CardContent className="grid gap-4 px-0">
-            {articles.data?.map((article) => (
-              <div
-                onClick={() => handleArticleClick(article.url)}
-                key={article.title}
-                className="flex items-center space-x-4 rounded-md border p-4 m-0 cursor-pointer">
-                <Image
-                  src={article.thumbnail}
-                  width={20}
-                  height={20}
-                  alt="thumbnail"
-                />
-                <div className="flex-1 space-y-1 w-1/3">
-                  <p className="text-sm font-medium leading-none text-ellipsis overflow-hidden whitespace-nowrap">
-                    {article.title}
-                  </p>
-                  <p className="text-sm text-muted-foreground text-ellipsis overflow-hidden whitespace-nowrap">
-                    {article.text.slice(50, 100)}
-                  </p>
-                </div>
-              </div>
+            {!articles.data?.length && <EmptyArticle />}
+            {articles.data?.map((article, idx) => (
+              <Article
+                key={idx}
+                title={article.title}
+                text={article.text}
+                url={article.url}
+                thumbnail={article.thumbnail}
+              />
             ))}
           </CardContent>
         </CardContent>

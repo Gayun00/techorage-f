@@ -6,10 +6,6 @@ const articleQueryKey = {
   all: ["article"],
 };
 
-const keywordsQueryKey = {
-  all: ["keywords"],
-};
-
 export const useArticleQuery = () => {
   return useQuery({
     queryKey: articleQueryKey.all,
@@ -19,7 +15,7 @@ export const useArticleQuery = () => {
 
 export const useKeywordsQuery = () => {
   return useQuery({
-    queryKey: keywordsQueryKey.all,
+    queryKey: articleQueryKey.all,
     queryFn: getKeywords,
   });
 };
@@ -30,7 +26,7 @@ export const useSubmitArticleMutation = () => {
   return useMutation({
     mutationFn: (url: string) => submitArticle(url),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({ queryKey: articleQueryKey.all });
     },
   });
 };
@@ -42,9 +38,7 @@ const submitArticle = (url: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ url }),
-  })
-    .then((res) => res.json())
-    .then((data) => console.log("data", data));
+  });
 };
 
 const getArticles = (): Promise<Article[]> => {
