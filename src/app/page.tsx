@@ -15,19 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
 import Image from "next/image";
-
-interface Article {
-  title: string;
-  text: string;
-  thumbnail: string;
-  keywords: string[];
-  url: string;
-}
+import { useArticleQuery, useSubmitArticleMutation } from "./queries";
 
 export default function Home() {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const articles = useArticleQuery();
+  const submitArticleMutation = useSubmitArticleMutation();
   const formSchema = z.object({
     url: z.string().refine(
       (value) => {
@@ -48,35 +41,8 @@ export default function Home() {
     },
   });
 
-  const submitArticle = (url: string) => {
-    fetch("http://localhost:5000/article", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("data", data));
-  };
-
-  const getArticles = (token: string) => {
-    fetch("http://localhost:5000/articles", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setArticles(data.articles));
-  };
-
-  useEffect(() => {
-    getArticles("token123");
-  }, []);
-
   function onSubmit({ url }: z.infer<typeof formSchema>) {
-    submitArticle(url);
+    submitArticleMutation.mutate(url);
   }
 
   const handleArticleClick = (url: string) => {
@@ -113,7 +79,7 @@ export default function Home() {
             <Badge>Next.js</Badge>
           </div>
           <CardContent className="grid gap-4 px-0">
-            {articles.map((article) => (
+            {articles.data?.map((article) => (
               <div
                 onClick={() => handleArticleClick(article.url)}
                 key={article.title}
@@ -129,7 +95,7 @@ export default function Home() {
                     {article.title}
                   </p>
                   <p className="text-sm text-muted-foreground text-ellipsis overflow-hidden whitespace-nowrap">
-                    {article.text.slice(0, 30)}
+                    {article.text.slice(50, 100)}
                   </p>
                 </div>
               </div>
