@@ -23,6 +23,7 @@ interface Article {
   text: string;
   thumbnail: string;
   keywords: string[];
+  url: string;
 }
 
 export default function Home() {
@@ -77,6 +78,10 @@ export default function Home() {
   function onSubmit({ url }: z.infer<typeof formSchema>) {
     submitArticle(url);
   }
+
+  const handleArticleClick = (url: string) => {
+    window.open(url);
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Card>
@@ -110,8 +115,9 @@ export default function Home() {
           <CardContent className="grid gap-4 px-0">
             {articles.map((article) => (
               <div
+                onClick={() => handleArticleClick(article.url)}
                 key={article.title}
-                className="flex items-center space-x-4 rounded-md border p-4 m-0">
+                className="flex items-center space-x-4 rounded-md border p-4 m-0 cursor-pointer">
                 <Image
                   src={article.thumbnail}
                   width={20}
