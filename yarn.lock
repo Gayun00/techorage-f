@@ -2655,12 +2655,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.279.0":
-  version: 0.279.0
-  resolution: "lucide-react@npm:0.279.0"
+"lucide-react@npm:^0.284.0":
+  version: 0.284.0
+  resolution: "lucide-react@npm:0.284.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: d9b9200af359806fcea878221ab054615fc7465d49db45cb5fdd2e9b1c6d59a5dc7431e633095f8db4677918518b54d5fe3e9b4292f96bc26d5268b4b5b6b1be
+  checksum: ad4cb554da392556f78ea79203fe16ff3261904723ffcf47ab00aca9e6613d24b457afcb1dc26c2845bcf673d9ffd261f7b0c13232b3ae60641fc652c85b854d
   languageName: node
   linkType: hard
 
@@ -3999,7 +3999,7 @@ __metadata:
     clsx: ^2.0.0
     eslint: latest
     eslint-config-next: latest
-    lucide-react: ^0.279.0
+    lucide-react: ^0.284.0
     next: latest
     postcss: latest
     react: latest
