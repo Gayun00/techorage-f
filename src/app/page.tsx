@@ -54,7 +54,6 @@ export default function Home() {
     submitArticleMutation.mutate(url);
   }
 
-  console.log(keywords.data, "keywords");
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Card>
@@ -102,10 +101,11 @@ export default function Home() {
             {keywords.data?.map((keywordData, idx) => (
               <Keyword key={idx}>{keywordData.keyword}</Keyword>
             ))}
-            <div className="flex items-center text-xs">
+            {/* 키워드 추출 중에만 표시 */}
+            {/* <div className="flex items-center text-xs">
               <Loader2 className="mr-2 h-3 w-3 animate-spin" />
               <p>키워드 추출 중...</p>
-            </div>
+            </div> */}
           </div>
 
           <CardContent className="grid gap-4 px-0">
@@ -113,9 +113,11 @@ export default function Home() {
             {articles.data?.map((article, idx) => (
               <Article
                 key={idx}
+                id={article.id}
                 title={article.title}
                 text={article.text}
                 url={article.url}
+                keywords={article.keywords}
                 thumbnail={article.thumbnail}
               />
             ))}

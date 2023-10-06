@@ -3,19 +3,21 @@ import { URL } from "../constants";
 import { Article, Keyword } from "../types";
 
 const articleQueryKey = {
-  all: ["article"],
+  all: ["all"],
+  article: () => [...articleQueryKey.all, "article"],
+  keywords: () => [...articleQueryKey.all, "keywords"],
 };
 
 export const useArticleQuery = () => {
   return useQuery({
-    queryKey: articleQueryKey.all,
+    queryKey: articleQueryKey.article(),
     queryFn: getArticles,
   });
 };
 
 export const useKeywordsQuery = () => {
   return useQuery({
-    queryKey: articleQueryKey.all,
+    queryKey: articleQueryKey.keywords(),
     queryFn: getKeywords,
   });
 };
@@ -31,8 +33,29 @@ export const useSubmitArticleMutation = () => {
   });
 };
 
+export const useUpdateArticleKeywordsMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => updateArticleKeywords(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: articleQueryKey.keywords() });
+    },
+  });
+};
+
+const updateArticleKeywords = (articleId: String) => {
+  return fetch(`${URL.API_SERVER}/${articleId}/keywords`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: articleId }),
+  });
+};
+
 const submitArticle = (url: string) => {
-  return fetch(`${URL.API_SERVER}/article`, {
+  return fetch(`${URL.API_SERVER}/articles`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -46,9 +69,7 @@ const getArticles = (): Promise<Article[]> => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then((res) => res.json())
-    .then((data) => data.articles);
+  }).then((res) => res.json());
 };
 
 const getKeywords = (): Promise<Keyword[]> => {
