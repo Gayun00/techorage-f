@@ -36,21 +36,19 @@ export const useSubmitArticleMutation = () => {
 export const useUpdateArticleKeywordsMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (id: string) => updateArticleKeywords(id),
+  return useMutation((id: string) => updateArticleKeywords(id), {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: articleQueryKey.keywords() });
     },
   });
 };
 
-const updateArticleKeywords = (articleId: String) => {
-  return fetch(`${URL.API_SERVER}/${articleId}/keywords`, {
-    method: "PUT",
+const updateArticleKeywords = (articleId: string) => {
+  return fetch(`${URL.API_SERVER}/articles/${articleId}/keywords`, {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: articleId }),
   });
 };
 
@@ -77,7 +75,5 @@ const getKeywords = (): Promise<Keyword[]> => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then((res) => res.json())
-    .then((data) => data.keywords);
+  }).then((res) => res.json());
 };
