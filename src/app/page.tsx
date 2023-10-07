@@ -5,10 +5,10 @@ import {
   useKeywordsQuery,
   useSubmitArticleMutation,
 } from "./queries";
-import Article from "@/components/Article";
-import EmptyArticle from "@/components/fallbacks/EmptyArticle";
+
 import Keywords from "@/components/Keywords";
 import ArticleUrlInput from "@/components/ArticleUrlInput";
+import Articlelist from "@/components/ArticleList";
 
 export default function Home() {
   const articles = useArticleQuery();
@@ -26,20 +26,7 @@ export default function Home() {
           <ArticleUrlInput mutation={submitArticleMutation} />
           <Keywords keywords={keywords.data || []} />
 
-          <CardContent className="grid gap-4 px-0">
-            {!articles.data?.length && <EmptyArticle />}
-            {articles.data?.map((article, idx) => (
-              <Article
-                key={idx}
-                id={article.id}
-                title={article.title}
-                text={article.text}
-                url={article.url}
-                keywords={article.keywords}
-                thumbnail={article.thumbnail}
-              />
-            ))}
-          </CardContent>
+          <Articlelist articles={articles?.data || []} />
         </CardContent>
       </Card>
     </main>
