@@ -14,8 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import {
   useArticleQuery,
   useKeywordsQuery,
@@ -23,13 +21,14 @@ import {
 } from "./queries";
 import Article from "@/components/Article";
 import EmptyArticle from "@/components/fallbacks/EmptyArticle";
-import Keyword from "@/components/badges/Keyword";
 import { Loader2 } from "lucide-react";
+import Keywords from "@/components/Keywords";
 
 export default function Home() {
   const articles = useArticleQuery();
   const keywords = useKeywordsQuery();
   const submitArticleMutation = useSubmitArticleMutation();
+
   const formSchema = z.object({
     url: z.string().refine(
       (value) => {
@@ -93,20 +92,7 @@ export default function Home() {
             </form>
           </Form>
 
-          <div className="my-4 space-x-2 space-y-2">
-            {!keywords.data?.length &&
-              "모은 아티클의 공통 키워드를 보여줘요"
-                .split(" ")
-                .map((keyword, idx) => <Keyword key={idx}>{keyword}</Keyword>)}
-            {keywords.data?.map((keywordData, idx) => (
-              <Keyword key={idx}>{keywordData.keyword}</Keyword>
-            ))}
-            {/* 키워드 추출 중에만 표시 */}
-            {/* <div className="flex items-center text-xs">
-              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-              <p>키워드 추출 중...</p>
-            </div> */}
-          </div>
+          <Keywords keywords={keywords.data || []} />
 
           <CardContent className="grid gap-4 px-0">
             {!articles.data?.length && <EmptyArticle />}

@@ -1,5 +1,5 @@
 // import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 // import DefaultThumbnail from "/public/next.svg";
 import { useUpdateArticleKeywordsMutation } from "@/app/queries";
 
@@ -20,16 +20,16 @@ function Article({ title, text, url, id, keywords, thumbnail }: Props) {
     window.open(url);
   };
 
+  useEffect(() => {
+    if (!id) return;
+    if (keywords?.length) return;
+    articleKeywordsMutation.mutate(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      {!keywords?.length && (
-        <button
-          onClick={() => {
-            articleKeywordsMutation.mutate(id);
-          }}>
-          키워드 분석하기
-        </button>
-      )}
+      {!keywords?.length && <button onClick={() => {}}>키워드 분석하기</button>}
       <div
         onClick={handleArticleClick}
         key={title}

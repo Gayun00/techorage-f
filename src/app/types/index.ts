@@ -8,6 +8,7 @@ export interface Article {
 }
 
 export interface Keyword {
+  id: string;
   keyword: string;
   count: number;
 }
