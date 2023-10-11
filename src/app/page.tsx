@@ -10,15 +10,27 @@ import {
 import Keywords from "@/components/Keywords";
 import ArticleUrlInput from "@/components/ArticleUrlInput";
 import Articlelist from "@/components/ArticleList";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const articles = useArticleQuery();
   const keywords = useKeywordsQuery();
   const submitArticleMutation = useSubmitArticleMutation();
   const articleKeywordsMutation = useUpdateArticleKeywordsMutation();
+  const session = useSession();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.push("api/auth/signin");
+    }
+  }, []);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Button onClick={() => signOut()}>Sign out</Button>
       <Card>
         <CardHeader>
           <CardTitle>Enter url</CardTitle>
