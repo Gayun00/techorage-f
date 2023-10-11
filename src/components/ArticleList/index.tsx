@@ -5,9 +5,10 @@ import EmptyArticle from "@/components/fallbacks/EmptyArticle";
 
 interface Props {
   articles: ArticleType[];
+  onUpdateKeywords: (url: string) => void;
 }
 
-function Articlelist({ articles }: Props) {
+function Articlelist({ articles, onUpdateKeywords }: Props) {
   return (
     <div className="grid gap-4 px-0">
       {!articles?.length && <EmptyArticle />}
@@ -19,7 +20,7 @@ function Articlelist({ articles }: Props) {
           text={article.text}
           url={article.url}
           keywords={article.keywords}
-          thumbnail={article.thumbnail}
+          onUpdateKeywords={onUpdateKeywords}
         />
       ))}
     </div>

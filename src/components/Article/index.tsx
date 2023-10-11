@@ -1,20 +1,15 @@
-// import Image from "next/image";
 import React, { useEffect } from "react";
-// import DefaultThumbnail from "/public/next.svg";
-import { useUpdateArticleKeywordsMutation } from "@/app/queries";
 
 interface Props {
   id: string;
   title: string;
   text: string;
   url?: string;
-  thumbnail?: string;
   keywords: string[];
+  onUpdateKeywords: (id: string) => void;
 }
 
-function Article({ title, text, url, id, keywords, thumbnail }: Props) {
-  const articleKeywordsMutation = useUpdateArticleKeywordsMutation();
-
+function Article({ title, text, url, id, keywords, onUpdateKeywords }: Props) {
   const handleArticleClick = () => {
     if (!url) return;
     window.open(url);
@@ -23,7 +18,7 @@ function Article({ title, text, url, id, keywords, thumbnail }: Props) {
   useEffect(() => {
     if (!id) return;
     if (keywords?.length) return;
-    articleKeywordsMutation.mutate(id);
+    onUpdateKeywords(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,12 +31,6 @@ function Article({ title, text, url, id, keywords, thumbnail }: Props) {
         className={`flex items-center space-x-4 rounded-md border p-4 m-0 ${
           url ? "cursor-pointer" : ""
         }`}>
-        {/* <Image
-        src={thumbnail || DefaultThumbnail}
-        width={20}
-        height={20}
-        alt="thumbnail"
-      /> */}
         <div className="flex-1 space-y-1 w-20">
           <p className="text-sm font-medium leading-none text-ellipsis overflow-hidden whitespace-nowrap">
             {title}
