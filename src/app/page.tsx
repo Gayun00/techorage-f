@@ -14,6 +14,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   const articles = useArticleQuery();
@@ -38,14 +39,17 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {mounted && (
-        <div className="flex flex-col justify-center w-full">
-          <p>user</p>
-
+        <div className="pb-5 flex flex-col justify-center w-full">
           <div className="flex justify-between items-center">
             {session.status === "authenticated" && (
-              <p>{session.data.user?.name}</p>
+              <Badge variant="outline" className="px-5 h-8 text-xs">
+                {session.data.user?.name}
+              </Badge>
             )}
-            <Button variant="ghost" onClick={() => signOut()}>
+            <Button
+              className="h-8 text-xs"
+              variant="secondary"
+              onClick={() => signOut()}>
               Sign out
             </Button>
           </div>
