@@ -10,11 +10,13 @@ import {
 
 interface Props {
   keywords: KeywordType[];
+  isExtracting: boolean;
 }
 
-function Keywords({ keywords }: Props) {
+function Keywords({ keywords, isExtracting }: Props) {
   return (
     <div className="my-4 space-x-2 space-y-2">
+      {isExtracting && <p>키워드 추출 중...</p>}
       {!keywords?.length &&
         "모은 아티클의 공통 키워드를 보여줘요"
           .split(" ")
