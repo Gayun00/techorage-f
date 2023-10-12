@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.35.7",
+    "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
