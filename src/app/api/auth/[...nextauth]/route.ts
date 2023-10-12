@@ -1,6 +1,7 @@
 import GitHubProvider from "next-auth/providers/github";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
+import { signJwtAccessToken } from "@/app/utils/jwt";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -9,6 +10,31 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token }) {
+      const accessToken = signJwtAccessToken({
+        email: token.email,
+        name: token.name,
+      });
+
+      return {
+        token: accessToken,
+        email: token.email,
+        name: token.name,
+      };
+    },
+    async session({ session, token, user }) {
+      return {
+        ...session,
+        ...token,
+        ...user,
+      };
+    },
+  },
 };
 const handler = NextAuth(authOptions);
 
