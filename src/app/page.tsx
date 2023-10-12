@@ -37,7 +37,7 @@ export default function Home() {
     }
     if (session.data?.token)
       localStorage.setItem(STORAGE_KEY.TOKEN, session.data?.token);
-  }, [session]);
+  }, [session, router]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
