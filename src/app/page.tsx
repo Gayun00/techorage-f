@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { STORAGE_KEY } from "./constants";
 
 export default function Home() {
   const articles = useArticleQuery();
@@ -34,6 +35,8 @@ export default function Home() {
       router.push("api/auth/signin");
       return;
     }
+    if (session.data?.token)
+      localStorage.setItem(STORAGE_KEY.TOKEN, session.data?.token);
   }, [session]);
 
   return (

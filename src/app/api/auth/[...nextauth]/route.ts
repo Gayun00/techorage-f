@@ -30,7 +30,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token, user }) {
       return {
         ...session,
-        ...token,
+        token: token.token,
         ...user,
       };
     },
