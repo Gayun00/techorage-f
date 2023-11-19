@@ -5,6 +5,7 @@ export interface Article {
   thumbnail: string;
   keywords: string[];
   url: string;
+  createdAt: Date;
 }
 
 export interface Keyword {

@@ -66,10 +66,7 @@ export default function Home() {
 
         <CardContent>
           <ArticleUrlInput mutation={submitArticleMutation} />
-          <Keywords
-            keywords={keywords.data || []}
-            isExtracting={articleKeywordsMutation.isLoading}
-          />
+
           <Articlelist
             articles={articles?.data || []}
             onUpdateKeywords={(id: string) =>
