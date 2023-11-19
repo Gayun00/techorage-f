@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { STORAGE_KEY } from "./constants";
+import Link from "next/link";
 
 export default function Home() {
   const articles = useArticleQuery();
@@ -41,40 +42,41 @@ export default function Home() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <Card>
-        <CardHeader>
-          {mounted && (
-            <div className="pb-5 flex flex-col justify-center w-full">
-              <div className="flex justify-between items-center">
-                {session.status === "authenticated" && (
-                  <Badge variant="outline" className="px-5 h-8 text-xs">
-                    {session.data.user?.name}
-                  </Badge>
-                )}
-                <Button
-                  className="h-8 text-xs"
-                  variant="secondary"
-                  onClick={() => signOut()}>
-                  Sign out
-                </Button>
-              </div>
+    <Card>
+      <CardHeader>
+        {mounted && (
+          <div className="pb-5 flex flex-col justify-center w-full">
+            <div className="flex justify-between items-center">
+              {session.status === "authenticated" && (
+                <Badge variant="outline" className="px-5 h-8 text-xs">
+                  {session.data.user?.name}
+                </Badge>
+              )}
+              <Button
+                className="h-8 text-xs"
+                variant="secondary"
+                onClick={() => signOut()}>
+                Sign out
+              </Button>
             </div>
-          )}
-          <CardTitle>Enter url</CardTitle>
-        </CardHeader>
+          </div>
+        )}
+        <CardTitle>Enter url</CardTitle>
+      </CardHeader>
 
-        <CardContent>
-          <ArticleUrlInput mutation={submitArticleMutation} />
+      <CardContent>
+        <ArticleUrlInput mutation={submitArticleMutation} />
+        <Link href="weekly-articles">
+          <Button variant="secondary" className="mt-4">
+            주간 아티클 모아보기
+          </Button>
+        </Link>
 
-          <Articlelist
-            articles={articles?.data || []}
-            onUpdateKeywords={(id: string) =>
-              articleKeywordsMutation.mutate(id)
-            }
-          />
-        </CardContent>
-      </Card>
-    </main>
+        <Articlelist
+          articles={articles?.data || []}
+          onUpdateKeywords={(id: string) => articleKeywordsMutation.mutate(id)}
+        />
+      </CardContent>
+    </Card>
   );
 }
