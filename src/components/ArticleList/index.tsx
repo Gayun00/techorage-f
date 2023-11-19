@@ -40,7 +40,7 @@ function ArticleList({ articles, onUpdateKeywords }: Props) {
   }, [articles, onUpdateKeywords]);
 
   return (
-    <div className="grid gap-4 px-0">
+    <div className="mt-6 px-0 grid gap-4 ">
       {!articles?.length && <EmptyArticle />}
       {renderedElements}
     </div>
