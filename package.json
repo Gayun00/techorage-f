@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -30,6 +32,9 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.35.7",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@types/jest": "^29.5.8",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "latest",
     "@types/react": "latest",
@@ -37,6 +42,8 @@
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
