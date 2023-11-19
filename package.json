@@ -32,8 +32,11 @@
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.35.7",
+    "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.8",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "latest",
@@ -46,6 +49,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "latest",
     "tailwindcss": "latest",
+    "tsconfig-paths-jest": "^0.0.1",
     "typescript": "latest"
   }
 }
